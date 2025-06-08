@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PDNF & PCNF Calculator</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>PDNF & PCNF Calculator</h1>
+    <form method="post">
+      <label>Enter Boolean Expression:</label>
+      <input type="text" name="expr" placeholder="A & B | ~C" required value="{{ expr or '' }}">
+      <button type="submit">Calculate</button>
+    </form>
+
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+
+    {% if expr %}
+      <h2>Postfix Expression</h2>
+      <pre>{{ postfix }}</pre>
+
+      <h2>Truth Table</h2>
+      <table>
+        <tr>
+          {% for var in variables %}
+            <th>{{ var }}</th>
+          {% endfor %}
+          <th>Result</th>
+        </tr>
+        {% for row, result in table %}
+          <tr>
+            {% for val in row %}
+              <td>{{ 'T' if val else 'F' }}</td>
+            {% endfor %}
+            <td>{{ 'T' if result else 'F' }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+
+      <h2>PDNF</h2>
+      <pre>{{ pdnf }}</pre>
+
+      <h2>PCNF</h2>
+      <pre>{{ pcnf }}</pre>
+    {% endif %}
+  </div>
+</body>
+</html>
